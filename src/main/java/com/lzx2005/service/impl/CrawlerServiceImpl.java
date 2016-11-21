@@ -39,6 +39,7 @@ public class CrawlerServiceImpl implements CrawlerService {
             String body = website.getBody();
             if(null!=website){
                 website.setBody("");
+                System.out.println("将爬虫爬到的网站写入MySQL");
                 websiteRepository.save(website);
             }
             Document parse = Jsoup.parse(body);
@@ -76,6 +77,9 @@ public class CrawlerServiceImpl implements CrawlerService {
             return;
         } catch (UrlRepeatException e) {
             System.err.println("要爬取的地址重复了");
+            return;
+        } catch (Exception e){
+            System.err.println("未知错误，看日志");
             return;
         }
     }
