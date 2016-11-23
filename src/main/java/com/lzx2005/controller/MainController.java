@@ -51,7 +51,7 @@ public class MainController {
     public String read(@RequestParam(value = "url",required = false,defaultValue = "www.baidu.com") String url){
         try {
             URL url1 = new URL(url);
-            crawlerService.mainCrawler(url1);
+            crawlerService.mainCrawler(url1,0);
             return url+" website crawler started!";
         } catch (MalformedURLException e) {
             e.printStackTrace();

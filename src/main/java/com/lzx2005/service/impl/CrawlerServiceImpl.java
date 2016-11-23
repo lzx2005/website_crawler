@@ -30,10 +30,9 @@ public class CrawlerServiceImpl implements CrawlerService {
         this.websiteRepository = websiteRepository;
     }
 
-    public void mainCrawler(URL url){
+    public void mainCrawler(URL url,long deep){
         System.out.println("===============================================");
-        System.out.println("开始爬取"+url.toString()+"的内容");
-        System.out.println("===============================================");
+        System.out.println("开始爬取"+url.toString()+"的内容，当前递归深度："+deep);
         try {
             Website website = readUrl(url);
             String body = website.getBody();
@@ -41,10 +40,14 @@ public class CrawlerServiceImpl implements CrawlerService {
                 website.setBody("");
                 System.out.println("将爬虫爬到的网站写入MySQL");
                 websiteRepository.save(website);
+                System.out.println("===============================================");
             }
+
+            //开始解析当前页面里有的HTML
             Document parse = Jsoup.parse(body);
             Elements as = parse.getElementsByTag("a");
             System.out.println(as.size());
+            deep++;
             for(int i=0;i<as.size();i++){
                 Element a = as.get(i);
                 boolean hasHref = a.hasAttr("href");
@@ -65,27 +68,41 @@ public class CrawlerServiceImpl implements CrawlerService {
                     }
                     if(null!=newUrl){
                         //开始递归下一个url，反复查找
-                        mainCrawler(newUrl);
+                        mainCrawler(newUrl,deep);
                     }
                 }
             }
+            deep--;
         } catch (MalformedURLException e){
-            System.err.println("无法渲染Url,这个地址是错误的");
+            System.err.println("无法渲染Url,这个地址是错误的："+e.getMessage());
+            System.out.println("===============================================");
+            deep--;
             return;
         } catch (IOException e) {
-            System.err.println("出现了IO错误");
+            System.err.println("出现了IO错误："+e.getMessage());
+            System.out.println("===============================================");
+            deep--;
             return;
         } catch (UrlRepeatException e) {
-            System.err.println("要爬取的地址重复了");
+            System.err.println("要爬取的地址重复了："+e.getMessage());
+            System.out.println("===============================================");
+            deep--;
+            return;
+        } catch (IllegalArgumentException e){
+            System.err.println("IllegalArgumentException错误："+e.getMessage());
+            System.out.println("===============================================");
+            deep--;
             return;
         } catch (Exception e){
-            System.err.println("未知错误，看日志");
+            System.err.println("未知错误，看日志："+e.getMessage());
+            System.out.println("===============================================");
+            deep--;
             return;
         }
     }
 
     @Override
-    public Website readUrl(URL url) throws IOException, UrlRepeatException {
+    public Website readUrl(URL url) throws IOException, UrlRepeatException,IllegalArgumentException,Exception {
         List<Website> byUrl = websiteRepository.findByUrl(url.toString());
 
         if(null!=byUrl&&byUrl.size()>0){

@@ -11,6 +11,6 @@ import java.net.URL;
  */
 public interface CrawlerService {
 
-    public void mainCrawler(URL url);
-    public Website readUrl(URL url) throws IOException, UrlRepeatException;
+    public void mainCrawler(URL url,long deep);
+    public Website readUrl(URL url) throws IOException, UrlRepeatException,IllegalArgumentException, Exception;
 }
