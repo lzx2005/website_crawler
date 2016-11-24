@@ -49,6 +49,20 @@
             <artifactId>jsoup</artifactId>
             <version>1.10.1</version>
         </dependency>
+
+        <!-- Elasticsearch依赖 -->
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>2.4.1</version>
+        </dependency>
+
+        <!-- FastJson，用来解析Json的 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.7</version>
+        </dependency>
     </dependencies>
 
 
