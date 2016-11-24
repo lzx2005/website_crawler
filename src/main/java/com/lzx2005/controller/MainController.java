@@ -33,7 +33,6 @@ public class MainController {
     @Transactional(readOnly = true)
     public String welcome(@RequestParam(value = "id",required = false,defaultValue = "1000") Long websiteId){
         Website website = websiteService.findWebsite(websiteId);
-        System.out.println(website);
         return "hello world:"+website.getTitle();
     }
 
@@ -51,7 +50,9 @@ public class MainController {
     @RequestMapping("/read")
     @ResponseBody
     public String read(@RequestParam(value = "url",required = false,defaultValue = "www.baidu.com") String url){
+
         CrawlerTask crawlerTask = ApplicationContextProvider.getBean("crawlerTask", CrawlerTask.class);
+        crawlerTask.setName(url);
         crawlerTask.setUrl(url);
         crawlerTask.start();
         System.out.println("线程启动");
