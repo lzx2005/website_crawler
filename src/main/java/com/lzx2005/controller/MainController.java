@@ -1,10 +1,12 @@
 package com.lzx2005.controller;
 
+import com.lzx2005.content.ApplicationContextProvider;
 import com.lzx2005.entity.Website;
 import com.lzx2005.exception.UrlRepeatException;
 import com.lzx2005.service.CrawlerService;
 import com.lzx2005.service.WebsiteService;
 import com.lzx2005.service.impl.CrawlerServiceImpl;
+import com.lzx2005.thread.CrawlerTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,13 +51,10 @@ public class MainController {
     @RequestMapping("/read")
     @ResponseBody
     public String read(@RequestParam(value = "url",required = false,defaultValue = "www.baidu.com") String url){
-        try {
-            URL url1 = new URL(url);
-            crawlerService.mainCrawler(url1,0);
-            return url+" website crawler started!";
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return "输入的不是合法url，合法的URL类似:\"http://www.baidu.com\"";
-        }
+        CrawlerTask crawlerTask = ApplicationContextProvider.getBean("crawlerTask", CrawlerTask.class);
+        crawlerTask.setUrl(url);
+        crawlerTask.start();
+        System.out.println("线程启动");
+        return "crawler thread is started!";
     }
 }
