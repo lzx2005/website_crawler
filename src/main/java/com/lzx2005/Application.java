@@ -7,10 +7,9 @@ import org.springframework.context.annotation.ImportResource;
 /**
  * @author Lizhengxian 2016.11.9
  */
-
+//@ImportResource(locations={"classpath:config/application-bean.xml"})
 @SpringBootApplication
 @Configuration
-@ImportResource(locations={"classpath:config/application-bean.xml"})
 public class Application {
     public static void main(String[] args) {
 

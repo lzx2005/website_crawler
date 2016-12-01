@@ -3,6 +3,7 @@ package com.lzx2005.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by LiZhengxian on 2016/11/18 0018.
@@ -131,4 +132,5 @@ public class Website {
                 ", updateTime=" + updateTime +
                 '}';
     }
+
 }

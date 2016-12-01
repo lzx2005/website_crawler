@@ -4,12 +4,16 @@ import com.lzx2005.entity.Website;
 import com.lzx2005.exception.UrlRepeatException;
 import com.lzx2005.repository.WebsiteRepository;
 import com.lzx2005.service.CrawlerService;
+import com.lzx2005.service.ElasticsearchService;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -23,6 +27,11 @@ import java.util.List;
 
 @Component("CrawlerService")
 public class CrawlerServiceImpl implements CrawlerService {
+    final static Logger logger= LoggerFactory.getLogger(CrawlerServiceImpl.class);
+
+
+    @Autowired
+    private ElasticsearchService elasticsearchService;
 
     private final WebsiteRepository websiteRepository;
 
@@ -32,15 +41,16 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     public void mainCrawler(URL url,long deep){
         System.out.println("===============================================");
-        System.out.println("开始爬取"+url.toString()+"的内容，当前递归深度："+deep);
+        logger.info("开始爬取"+url.toString()+"的内容，当前递归深度："+deep);
         try {
             Website website = readUrl(url);
             String body = website.getBody();
             if(null!=website){
                 website.setBody("");
-                System.out.println("将爬虫爬到的网站写入MySQL");
+                logger.info("将爬虫爬到的网站["+website.getUrl()+"]写入MySQL");
                 websiteRepository.save(website);
-                System.out.println("===============================================");
+                //elasticsearchService.insertOneRecord(website);
+                //  TODO: 2016/11/25 0025  这边的Elasticsearch还是有点问题
             }
 
             //开始解析当前页面里有的HTML
@@ -74,29 +84,24 @@ public class CrawlerServiceImpl implements CrawlerService {
             }
             deep--;
         } catch (MalformedURLException e){
-            System.err.println("无法渲染Url,这个地址是错误的："+e.getMessage());
-            System.out.println("===============================================");
             deep--;
+            logger.error("无法渲染Url,这个地址是错误的：",e.getMessage());
             return;
         } catch (IOException e) {
-            System.err.println("出现了IO错误："+e.getMessage());
-            System.out.println("===============================================");
             deep--;
+            logger.error("出现了IO错误：",e.getMessage());
             return;
         } catch (UrlRepeatException e) {
             System.err.println("要爬取的地址重复了："+e.getMessage());
-            System.out.println("===============================================");
             deep--;
             return;
         } catch (IllegalArgumentException e){
-            System.err.println("IllegalArgumentException错误："+e.getMessage());
-            System.out.println("===============================================");
             deep--;
+            logger.error("IllegalArgumentException错误",e.getMessage());
             return;
         } catch (Exception e){
-            System.err.println("未知错误，看日志："+e.getMessage());
-            System.out.println("===============================================");
             deep--;
+            logger.error("未知错误，看日志：",e.getMessage());
             return;
         }
     }
@@ -127,9 +132,9 @@ public class CrawlerServiceImpl implements CrawlerService {
         return website;
     }
 
-    public static void main(String[] args) throws MalformedURLException {
+    /*public static void main(String[] args) throws MalformedURLException {
         URL url = new URL("http://www.lzx2005.com:80/");
         System.out.println(url.getAuthority());
         System.out.println(url.getHost());
-    }
+    }*/
 }
