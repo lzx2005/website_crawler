@@ -6,7 +6,8 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * Created by LiZhengxian on 2016/11/18 0018.
+ * 存储网站信息的实体类
+ * Created by Li Zhengxian on 2016/11/18 0018.
  */
 
 @Entity
