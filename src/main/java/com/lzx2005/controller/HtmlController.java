@@ -1,5 +1,8 @@
 package com.lzx2005.controller;
 
+import com.lzx2005.service.CrawlerService;
+import com.lzx2005.service.WebsiteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +18,11 @@ public class HtmlController {
     @Value("${application.message:Hello World}")
     private String message = "Hello World";
 
-    @RequestMapping("/html")
+    @Autowired
+    private WebsiteService websiteService;
+
+    @RequestMapping("/")
     public String index(Map<String, Object> model){
-        System.out.println("hello world");
-        model.put("time", new Date());
-        model.put("message", this.message);
         return "index";
     }
 }

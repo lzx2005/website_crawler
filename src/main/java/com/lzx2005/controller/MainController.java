@@ -29,15 +29,6 @@ public class MainController {
     private CrawlerService crawlerService;
 
 
-
-    @RequestMapping("/")
-    @ResponseBody
-    @Transactional(readOnly = true)
-    public String welcome(@RequestParam(value = "id",required = false,defaultValue = "1000") Long websiteId){
-        Website website = websiteService.findWebsite(websiteId);
-        return "hello world:"+website.getTitle();
-    }
-
     @RequestMapping("/find")
     @ResponseBody
     public String findByUrl(@RequestParam(value = "url",required = false,defaultValue = "www.baidu.com") String url){
