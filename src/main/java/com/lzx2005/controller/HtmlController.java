@@ -25,4 +25,10 @@ public class HtmlController {
     public String index(Map<String, Object> model){
         return "index";
     }
+
+
+    @RequestMapping("/crawler")
+    public String crawler(Map<String, Object> model){
+        return "crawler";
+    }
 }

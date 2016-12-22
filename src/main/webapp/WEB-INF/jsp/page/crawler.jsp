@@ -14,13 +14,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <img src="../../../static/image/logo1.png" class="logo">
+                <img src="../../../static/image/logo3.png" class="logo">
             </div>
             <div class="col-md-10">
-                <input class="form-control search-input" placeholder="搜点什么吧" />
+                <div class="input-group">
+                    <span class="input-group-addon">http://</span>
+                    <input type="text" class="form-control search-input" placeholder="需要爬取的网站首页">
+                </div>
             </div>
             <div class="col-md-2">
-                <input type="button" class="search-button" value="搜索"/>
+                <input type="button" class="search-button web-font" value="开始爬取"/>
             </div>
         </div>
     </div>
