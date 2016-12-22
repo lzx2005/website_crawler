@@ -31,8 +31,12 @@ public class ThreadMarkRepositoryTest {
     @Test
     public void test(){
         Date date = new Date();
-        ThreadMark threadMark = new ThreadMark("www.baidu.com","threadName","threadId",(short)1,date,date,date);
-        threadMarkRepository.save(threadMark);
+        ThreadMark threadMark = new ThreadMark("www.baidu1.com","threadName","threadId",(short)1,date,date,date);
+        ThreadMark save = threadMarkRepository.save(threadMark);
+        System.out.println(save.getId());
+        threadMark.setStatus((short) 0);
+        ThreadMark save1 = threadMarkRepository.save(threadMark);
+        System.out.println(save1.getId());
     }
 
     @Test

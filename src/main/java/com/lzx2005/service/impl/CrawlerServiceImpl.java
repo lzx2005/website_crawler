@@ -1,7 +1,9 @@
 package com.lzx2005.service.impl;
 
+import com.lzx2005.entity.ThreadMark;
 import com.lzx2005.entity.Website;
 import com.lzx2005.exception.UrlRepeatException;
+import com.lzx2005.repository.ThreadMarkRepository;
 import com.lzx2005.repository.WebsiteRepository;
 import com.lzx2005.service.CrawlerService;
 import com.lzx2005.service.ElasticsearchService;
@@ -28,8 +30,11 @@ import java.util.List;
 @Component("CrawlerService")
 public class CrawlerServiceImpl implements CrawlerService {
     final static Logger logger= LoggerFactory.getLogger(CrawlerServiceImpl.class);
+    private int id;
+    private ThreadMark threadMark;
 
-
+    @Autowired
+    private ThreadMarkRepository threadMarkRepository;
     @Autowired
     private ElasticsearchService elasticsearchService;
 
@@ -39,7 +44,23 @@ public class CrawlerServiceImpl implements CrawlerService {
         this.websiteRepository = websiteRepository;
     }
 
-    public void mainCrawler(URL url,long deep){
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public ThreadMark getThreadMark() {
+        return threadMark;
+    }
+
+    public void setThreadMark(ThreadMark threadMark) {
+        this.threadMark = threadMark;
+    }
+
+    public void mainCrawler(URL url, long deep){
         System.out.println("===============================================");
         logger.info("开始爬取"+url.toString()+"的内容，当前递归深度："+deep);
         try {
