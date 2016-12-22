@@ -31,4 +31,9 @@ public class HtmlController {
     public String crawler(Map<String, Object> model){
         return "crawler";
     }
+
+    @RequestMapping("/job")
+    public String job(Map<String, Object> model){
+        return "job";
+    }
 }

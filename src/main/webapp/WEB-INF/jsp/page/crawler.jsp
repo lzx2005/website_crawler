@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>爬取需要的网站</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <jsp:include page="../layout/css.jsp"/>
     <jsp:include page="../layout/script.jsp"/>

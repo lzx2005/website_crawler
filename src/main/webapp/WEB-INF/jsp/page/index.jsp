@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>搜索已经爬取的网站内容</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <jsp:include page="../layout/css.jsp"/>
     <jsp:include page="../layout/script.jsp"/>
@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <img src="../../../static/image/logo1.png" class="logo">
+                <img src="../../../static/image/logo4.png" class="logo">
             </div>
             <div class="col-md-10">
                 <input class="form-control search-input" placeholder="搜点什么吧" />
