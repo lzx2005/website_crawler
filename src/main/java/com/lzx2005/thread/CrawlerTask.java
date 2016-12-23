@@ -55,13 +55,13 @@ public class CrawlerTask  extends Thread{
             threadMark.setThreadId(Thread.currentThread().getId()+"");
             threadMark.setThreadName(Thread.currentThread().getName());
             ThreadMark saved = threadMarkRepository.save(threadMark);
-            int id = saved.getId();
+            int id = saved.getMarkId();
             if(id>0){
                 //标记开始
                 saved.setStatus((short) 1);
                 threadMarkRepository.save(saved);
                 crawlerService.setThreadMark(saved);
-                crawlerService.setId(saved.getId());
+                crawlerService.setId(saved.getMarkId());
                 //保存成功，开始爬虫
                 crawlerService.mainCrawler(url1,0);
                 //爬虫结束，标记成功

@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -33,14 +34,23 @@ public class ThreadMarkRepositoryTest {
         Date date = new Date();
         ThreadMark threadMark = new ThreadMark("www.baidu1.com","threadName","threadId",(short)1,date,date,date);
         ThreadMark save = threadMarkRepository.save(threadMark);
-        System.out.println(save.getId());
+        System.out.println(save.getMarkId());
         threadMark.setStatus((short) 0);
         ThreadMark save1 = threadMarkRepository.save(threadMark);
-        System.out.println(save1.getId());
+        System.out.println(save1.getMarkId());
     }
 
     @Test
     public void delete(){
         threadMarkRepository.delete(1);
+    }
+
+    @Test
+    public void find(){
+        List<ThreadMark> byStatus = threadMarkRepository.findByStatus((short) 2);
+        System.out.println(byStatus.size());
+        for(ThreadMark tm : byStatus){
+            System.out.println(tm);
+        }
     }
 }

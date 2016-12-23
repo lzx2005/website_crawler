@@ -19,11 +19,11 @@
             <div class="col-md-10">
                 <div class="input-group">
                     <span class="input-group-addon">http://</span>
-                    <input type="text" class="form-control search-input" placeholder="需要爬取的网站首页">
+                    <input type="text" class="form-control search-input" placeholder="需要爬取的网站首页" id="host_input">
                 </div>
             </div>
             <div class="col-md-2">
-                <input type="button" class="search-button web-font" value="开始爬取"/>
+                <input type="button" class="search-button web-font" value="开始爬取" onclick="crawlerJob.buttonOnClick()"/>
             </div>
         </div>
     </div>

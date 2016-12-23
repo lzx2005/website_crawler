@@ -22,3 +22,27 @@ var websiteSetting = {
         });
     }
 }
+
+var crawlerJob = {
+    buttonOnClick : function () {
+        var url = $("#host_input").val();
+        crawlerJob.startCrawlerJob(url);
+    },
+    startCrawlerJob : function (url) {
+        var requestUrl = "/read?url=http://"+url;
+        $.ajax({
+            type : "GET",
+            url : requestUrl,
+            success : function(result) {
+                console.log(result['success'],result['msg']);
+                alert(result['msg']);
+                if(result['success']){
+                    window.location.reload();//刷新
+                }
+            },
+            error : function (xhr,status,error) {
+                
+            }
+        });
+    }
+}

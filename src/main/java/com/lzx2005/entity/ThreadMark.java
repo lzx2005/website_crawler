@@ -15,7 +15,7 @@ public class ThreadMark {
 
     @Id
     @GeneratedValue
-    private int Id;
+    private int markId;
     @Column(nullable = false)
     private String host;
     @Column(nullable = false)
@@ -41,12 +41,12 @@ public class ThreadMark {
         DoneTime = doneTime;
     }
 
-    public int getId() {
-        return Id;
+    public int getMarkId() {
+        return markId;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public void setMarkId(int markId) {
+        this.markId = markId;
     }
 
     public String getHost() {
@@ -107,8 +107,9 @@ public class ThreadMark {
 
     @Override
     public String toString() {
-        return "ThreadMarkRepository{" +
-                "host='" + host + '\'' +
+        return "ThreadMark{" +
+                "markId=" + markId +
+                ", host='" + host + '\'' +
                 ", threadName='" + threadName + '\'' +
                 ", threadId='" + threadId + '\'' +
                 ", status=" + status +
