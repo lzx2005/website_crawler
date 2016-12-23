@@ -34,15 +34,24 @@ public class CrawlerTask  extends Thread{
     @Autowired
     private ThreadMarkRepository threadMarkRepository;
 
+    public long getDeep(){
+        return crawlerService.getOutDeep();
+    }
+
     @Override
     public void run() {
         try {
             URL url1 = new URL(url);
-            ThreadMark threadMark = new ThreadMark();
+            ThreadMark threadMark = threadMarkRepository.findByHost(url1.getHost());
+            if(threadMark==null){
+                threadMark = new ThreadMark();
+            }
             threadMark.setStatus((short) 0);
             threadMark.setHost(url1.getHost());
-            threadMark.setCreateTime(new Date());
-            threadMark.setStartTime(new Date());
+            Date date = new Date();
+            threadMark.setCreateTime(date);
+            threadMark.setStartTime(date);
+            threadMark.setDoneTime(date);
             threadMark.setThreadId(Thread.currentThread().getId()+"");
             threadMark.setThreadName(Thread.currentThread().getName());
             ThreadMark saved = threadMarkRepository.save(threadMark);

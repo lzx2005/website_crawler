@@ -3,7 +3,6 @@ package com.lzx2005.service.impl;
 import com.lzx2005.entity.ThreadMark;
 import com.lzx2005.entity.Website;
 import com.lzx2005.exception.UrlRepeatException;
-import com.lzx2005.repository.ThreadMarkRepository;
 import com.lzx2005.repository.WebsiteRepository;
 import com.lzx2005.service.CrawlerService;
 import com.lzx2005.service.ElasticsearchService;
@@ -32,9 +31,7 @@ public class CrawlerServiceImpl implements CrawlerService {
     final static Logger logger= LoggerFactory.getLogger(CrawlerServiceImpl.class);
     private int id;
     private ThreadMark threadMark;
-
-    @Autowired
-    private ThreadMarkRepository threadMarkRepository;
+    long outDeep=0;
     @Autowired
     private ElasticsearchService elasticsearchService;
 
@@ -52,10 +49,20 @@ public class CrawlerServiceImpl implements CrawlerService {
         this.id = id;
     }
 
+    public long getOutDeep() {
+        return outDeep;
+    }
+
+    public void setOutDeep(long outDeep) {
+        this.outDeep = outDeep;
+    }
+
+    @Override
     public ThreadMark getThreadMark() {
         return threadMark;
     }
 
+    @Override
     public void setThreadMark(ThreadMark threadMark) {
         this.threadMark = threadMark;
     }
@@ -79,6 +86,7 @@ public class CrawlerServiceImpl implements CrawlerService {
             Elements as = parse.getElementsByTag("a");
             System.out.println(as.size());
             deep++;
+            this.outDeep=deep;
             for(int i=0;i<as.size();i++){
                 Element a = as.get(i);
                 boolean hasHref = a.hasAttr("href");
@@ -103,27 +111,25 @@ public class CrawlerServiceImpl implements CrawlerService {
                     }
                 }
             }
-            deep--;
         } catch (MalformedURLException e){
-            deep--;
             logger.error("无法渲染Url,这个地址是错误的：",e.getMessage());
             return;
         } catch (IOException e) {
-            deep--;
             logger.error("出现了IO错误：",e.getMessage());
             return;
         } catch (UrlRepeatException e) {
             System.err.println("要爬取的地址重复了："+e.getMessage());
-            deep--;
             return;
         } catch (IllegalArgumentException e){
-            deep--;
             logger.error("IllegalArgumentException错误",e.getMessage());
             return;
         } catch (Exception e){
-            deep--;
             logger.error("未知错误，看日志：",e.getMessage());
             return;
+        } finally {
+            deep--;
+            this.outDeep=deep;
+            System.out.println("退出递归深度:"+deep);
         }
     }
 

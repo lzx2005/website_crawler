@@ -17,4 +17,8 @@ public interface CrawlerService {
     public int getId();
     public ThreadMark getThreadMark();
     public void setThreadMark(ThreadMark threadMark);
+
+
+    public long getOutDeep();
+    public void setOutDeep(long outDeep);
 }

@@ -44,7 +44,6 @@ public class MainController {
     @ResponseBody
     public String read(@RequestParam(value = "url",required = false,defaultValue = "www.baidu.com") String url){
         CrawlerTask crawlerTask = ApplicationContextProvider.getBean("crawlerTask", CrawlerTask.class);
-        crawlerTask.setName(url);
         crawlerTask.setUrl(url);
         crawlerTask.start();
         System.out.println("线程启动");
