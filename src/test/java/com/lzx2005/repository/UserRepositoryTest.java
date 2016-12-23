@@ -26,12 +26,12 @@ public class UserRepositoryTest {
 
     @Test
     public void test(){
-        User user = new User();
+        /*User user = new User();
         user.setUsername("lzx2005");
         user.setPassword("123");
         user.setCreateTime(new Date());
         user.setUserType((short) 0);
         User save = userRepository.save(user);
-        System.out.println(save);
+        System.out.println(save);*/
     }
 }

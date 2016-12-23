@@ -31,18 +31,18 @@ public class ThreadMarkRepositoryTest {
 
     @Test
     public void test(){
-        Date date = new Date();
+        /*Date date = new Date();
         ThreadMark threadMark = new ThreadMark("www.baidu1.com","threadName","threadId",(short)1,date,date,date);
         ThreadMark save = threadMarkRepository.save(threadMark);
         System.out.println(save.getMarkId());
         threadMark.setStatus((short) 0);
         ThreadMark save1 = threadMarkRepository.save(threadMark);
-        System.out.println(save1.getMarkId());
+        System.out.println(save1.getMarkId());*/
     }
 
     @Test
     public void delete(){
-        threadMarkRepository.delete(1);
+        /*threadMarkRepository.delete(1);*/
     }
 
     @Test
