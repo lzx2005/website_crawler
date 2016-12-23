@@ -1,5 +1,6 @@
 package com.lzx2005.controller;
 
+import com.lzx2005.dto.Count;
 import com.lzx2005.entity.ThreadMark;
 import com.lzx2005.repository.ThreadMarkRepository;
 import com.lzx2005.service.CrawlerService;
@@ -43,5 +44,13 @@ public class HtmlController {
         List<ThreadMark> byStatus = threadMarkRepository.findByStatus((short) 1);
         model.put("jobs",byStatus);
         return "job";
+    }
+
+
+    @RequestMapping("/count")
+    public String count(Map<String, Object> model){
+        List<Count> count = websiteService.getCount();
+        model.put("count",count);
+        return "count";
     }
 }

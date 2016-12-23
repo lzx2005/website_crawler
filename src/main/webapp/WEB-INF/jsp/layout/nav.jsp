@@ -17,6 +17,7 @@
                 <li class="active"><a href="${pageContext.request.contextPath}/">首页</a></li>
                 <li><a href="${pageContext.request.contextPath}/crawler">爬虫</a></li>
                 <li><a href="${pageContext.request.contextPath}/job">爬虫任务</a></li>
+                <li><a href="${pageContext.request.contextPath}/count">数据库统计</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

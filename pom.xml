@@ -82,6 +82,14 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.7</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mozilla.intl/chardet -->
+        <dependency>
+            <groupId>org.mozilla.intl</groupId>
+            <artifactId>chardet</artifactId>
+            <version>1.0</version>
+        </dependency>
+
     </dependencies>
 
 
