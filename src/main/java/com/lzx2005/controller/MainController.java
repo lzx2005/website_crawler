@@ -49,7 +49,7 @@ public class MainController {
     @RequestMapping("/read")
     @ResponseBody
     public AjaxResult<String> read(@RequestParam(value = "url",required = false,defaultValue = "www.baidu.com") String url){
-        List<ThreadMark> byStatus = threadMarkRepository.findByStatus((short) 2);
+        List<ThreadMark> byStatus = threadMarkRepository.findByStatus((short) 1);
         if(byStatus.size()>=10){
             return new AjaxResult<String>(false,"正在进行10个爬虫任务，请等待他们完成",null);
         }

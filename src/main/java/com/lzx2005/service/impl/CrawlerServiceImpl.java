@@ -101,14 +101,21 @@ public class CrawlerServiceImpl implements CrawlerService {
                             //这边跳转出去了，所以不爬了
                             continue;
                         }
+                    }else if(href.startsWith("//")){
+                        //绝对地址 ，比如"//home.jd.com"这样的网址，意思是"http://home.jd.com"，直接访问就行了
+                        newUrl = new URL(url.getProtocol()+":"+href);
+                        if(!newUrl.getHost().equalsIgnoreCase(url.getHost())){
+                            //这边跳转出去了，所以不爬了
+                            continue;
+                        }
                     }else if(href.startsWith("/")&&!href.equalsIgnoreCase("/")){
-                        //这是一个相对地址
-                        newUrl = new URL("http://"+url.getHost()+href);
+                            //这是一个相对地址
+                            newUrl = new URL(url.getProtocol()+"://"+url.getHost()+href);
+                    }else{
+                        newUrl = new URL(url.getProtocol()+"://"+url.getHost()+"/"+href);
                     }
-                    if(null!=newUrl){
-                        //开始递归下一个url，反复查找
-                        mainCrawler(newUrl,deep);
-                    }
+                    //开始递归下一个url，反复查找
+                    mainCrawler(newUrl,deep);
                 }
             }
         } catch (MalformedURLException e){
